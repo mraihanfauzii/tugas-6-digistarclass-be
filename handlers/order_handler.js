@@ -21,4 +21,31 @@ const getList = async (req, res) => {
     }
 };
 
-module.exports = { create, getList };
+const getOneByOrderId = async (req, res) => {
+    try {
+        const order = await orderUsecase.getOneByOrderId(req.params.id);
+        res.status(200).json(order);
+    } catch (err) {
+        res.status(404).json({ error: err.message });
+    }
+};
+
+const updateOne = async (req, res) => {
+    try {
+        const updatedOrder = await orderUsecase.updateOne(req.params.id, req.body);
+        res.status(200).json(updatedOrder);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+const deleteOne = async (req, res) => {
+    try {
+        await orderUsecase.deleteOne(req.params.id);
+        res.status(204).json();
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+module.exports = { create, getList, getOneByOrderId, updateOne, deleteOne };

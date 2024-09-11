@@ -14,4 +14,28 @@ const getList = async () => {
     return await orderRepository.findAll();
 };
 
-module.exports = { create, getList };
+const getOneByOrderId = async (orderId) => {
+    try {
+        return await orderRepository.getOneByOrderId(orderId);
+    } catch (error) {
+        throw new Error('Failed to get order by ID');
+    }
+};
+
+const updateOne = async (orderId, updateData) => {
+    try {
+        return await orderRepository.updateOne(orderId, updateData);
+    } catch (error) {
+        throw new Error('Failed to update order');
+    }
+};
+
+const deleteOne = async (orderId) => {
+    try {
+        return await orderRepository.deleteOne(orderId);
+    } catch (error) {
+        throw new Error('Failed to delete order');
+    }
+};
+
+module.exports = { create, getList, getOneByOrderId, updateOne, deleteOne };
