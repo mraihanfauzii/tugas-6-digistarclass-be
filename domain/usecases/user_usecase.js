@@ -10,7 +10,7 @@ const register = async (user) => {
 };
 
 const login = async (email, password) => {
-  const user = await repository.findOneByEmail(email);
+  const user = await userRepository.findOneByEmail(email);
   if (!user || !bcrypt.compareSync(password, user.password)) {
     throw new Error('Invalid email or password');
   }
