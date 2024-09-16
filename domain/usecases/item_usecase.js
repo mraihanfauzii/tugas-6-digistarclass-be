@@ -1,5 +1,7 @@
 const itemRepository = require('../repositories/item_repository');
 const { v4: uuidv4 } = require('uuid');
+const Item = require('../models/item_model');
+const axios = require('axios');
 
 exports.create = async (itemData) => {
     try {
@@ -20,9 +22,20 @@ exports.getList = async () => {
 
 exports.getOneByItemId = async (itemId) => {
     try {
-        return await itemRepository.getOneByItemId(itemId);
+        const localItem = await Item.findOne({ item_id: itemId });
+        if (localItem) {
+            return localItem;
+        } else {
+            // Assume the item_id is an integer for the FakeStoreAPI
+            const response = await axios.get(`https://fakestoreapi.com/products/${itemId}`);
+            const apiItem = response.data;
+            if (apiItem) {
+                return {...apiItem, item_id: apiItem.id.toString()};  // Convert API item format to your expected format
+            }
+            return null;
+        }
     } catch (error) {
-        throw new Error('Failed to get item by ID');
+        throw new Error('Failed to find item: ' + error.message);
     }
 };
 

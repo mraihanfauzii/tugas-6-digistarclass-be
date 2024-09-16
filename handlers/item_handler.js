@@ -1,3 +1,4 @@
+const axios = require('axios');
 const itemUsecase = require('../domain/usecases/item_usecase');
 
 const create = async (req, res) => {
@@ -11,8 +12,9 @@ const create = async (req, res) => {
 
 const getList = async (req, res) => {
     try {
-        const items = await itemUsecase.getList();
-        res.status(200).json({ statusCode: res.statusCode, message: 'Items retrieved successfully', items });
+        // Hanya panggil getList dari itemUsecase
+        const allItems = await itemUsecase.getList();
+        res.status(200).json({ statusCode: res.statusCode, message: 'Items retrieved successfully', allItems });
     } catch (err) {
         res.status(500).json({ statusCode: res.statusCode, message: 'Failed to get items', error: err.message });
     }

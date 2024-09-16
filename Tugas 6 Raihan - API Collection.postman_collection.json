@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5ffa9545-d43b-418f-a2b3-0326c1a3e18c",
+		"_postman_id": "d05c3bf2-9a27-4ed3-95fc-b693b38d63fc",
 		"name": "Tugas 6 Raihan - API Collection",
 		"description": "API Collection for Users, Roles, Orders, Customers, and Items",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"testuser\",\n    \"email\": \"testuser@example.com\",\n    \"password\": \"password123\"\n}"
+					"raw": "{\n  \"username\": \"johndoe\",\n  \"email\": \"johndoe@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"customer\",\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"Jakarta\",\n    \"state\": \"DKI Jakarta\",\n    \"zip\": \"12345\"\n  }\n}\n"
 				},
 				"url": {
 					"raw": "http://localhost:7000/users/register",
@@ -64,7 +64,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"testuser@example.com\",\n    \"password\": \"password123\"\n}"
+					"raw": "//User\n//{\n//    \"email\": \"johndoe@example.com\",\n//    \"password\": \"password123\"\n//}\n\n//admin\n{\n    \"email\": \"johndoeadmin@example.com\",\n    \"password\": \"password123\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:7000/users/login",
@@ -108,16 +108,6 @@
 		{
 			"name": "Get User by ID",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzNTNkMTIxYy1mYTEwLTQyODgtODE2NS1mNDQyNGU1ZGQxOGYiLCJpYXQiOjE3MjYxOTUwNzQsImV4cCI6MTcyNjE5Njg3NH0.0Ppx0hoYdXkqYTgMkVci7YcOA_T_WPZkv_AMBGs0k2M",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [
 					{
@@ -139,7 +129,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "353d121c-fa10-4288-8165-f4424e5dd18f"
+							"value": "bc4cd5f5-ee1a-4822-a523-a89005fae1cc"
 						}
 					]
 				}
@@ -178,7 +168,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "353d121c-fa10-4288-8165-f4424e5dd18f"
+							"value": "bc4cd5f5-ee1a-4822-a523-a89005fae1cc"
 						}
 					]
 				}
@@ -209,164 +199,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "353d121c-fa10-4288-8165-f4424e5dd18f"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Role",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"admin\",\n    \"position\": \"manager\",\n    \"stacks\": [\"nodejs\", \"react\"]\n}"
-				},
-				"url": {
-					"raw": "http://localhost:7000/roles",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"roles"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get All Roles",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt_token}}"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:7000/roles",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"roles"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Role by ID",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt_token}}"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:7000/roles/:id",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"roles",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "1ddcfb6f-a74a-4847-9259-1443c1137e9e"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Role by ID",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt_token}}"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"admin2\",\n    \"position\": \"manager2\",\n    \"stacks\": [\"nodejs2\", \"react2\"]\n}"
-				},
-				"url": {
-					"raw": "http://localhost:7000/roles/:id",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"roles",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "1ddcfb6f-a74a-4847-9259-1443c1137e9e"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Role by ID",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt_token}}"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:7000/roles/:id",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"roles",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "77514abf-75ea-499c-bb80-30403a9fc517"
+							"value": "bc4cd5f5-ee1a-4822-a523-a89005fae1cc"
 						}
 					]
 				}
@@ -389,7 +222,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"product_name\": \"Product 1\",\n    \"quantity\": 2,\n    \"price\": 100,\n    \"status\": \"test\"\n}"
+					"raw": "{\n    \"item_id\": \"1\",\n    \"quantity\": 10,\n    \"payment_method\": \"gopay\",\n    \"delivery_method\": \"gojek\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:7000/orders",
@@ -453,7 +286,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "8c59d18c-0f45-4d9e-8846-269362791dfd"
+							"value": "f1827ab0-4ea0-4162-bad9-f8b40e83a929"
 						}
 					]
 				}
@@ -476,7 +309,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"product_name\": \"Product 2\",\n    \"quantity\": 3,\n    \"price\": 1000,\n    \"status\": \"test2\"\n}"
+					"raw": "{\n  \"status\": \"Sampai di Tujuan\"\n}\n"
 				},
 				"url": {
 					"raw": "http://localhost:7000/orders/:id",
@@ -492,7 +325,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "447ae7bd-d1b4-4a0b-bfad-9cb9aa879e34"
+							"value": "3eceb59b-ee77-4796-87e3-67e361fdd9f4"
 						}
 					]
 				}
@@ -523,164 +356,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "447ae7bd-d1b4-4a0b-bfad-9cb9aa879e34"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Customer",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"johndoe@example.com\",\n    \"address\": {\n        \"street\": \"123 Main St\",\n        \"city\": \"New York\",\n        \"state\": \"NY\",\n        \"zip\": \"10001\"\n    }\n}"
-				},
-				"url": {
-					"raw": "http://localhost:7000/customers",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"customers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get All Customers",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt_token}}"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:7000/customers",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"customers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Customer by ID",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt_token}}"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:7000/customers/:id",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"customers",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "f7de6562-7ac0-4579-9574-a40924cc9976"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Customer by ID",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt_token}}"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"John Doe3e\",\n    \"email\": \"johndoe3@example.com\",\n    \"address\": {\n        \"street\": \"123 Main St\",\n        \"city\": \"New York\",\n        \"state\": \"NY\",\n        \"zip\": \"10001\"\n    }\n}"
-				},
-				"url": {
-					"raw": "http://localhost:7000/customers/:id",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"customers",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "7ea51ac8-199b-4a74-b3a7-f396a59714f8"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Customer by ID",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt_token}}"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:7000/customers/:id",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"customers",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "7ea51ac8-199b-4a74-b3a7-f396a59714f8"
+							"value": "f1827ab0-4ea0-4162-bad9-f8b40e83a929"
 						}
 					]
 				}
@@ -767,7 +443,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "61e18f3b-fa3b-4e5e-8b85-8eaf1857876f"
+							"value": "d83ad637-dd21-4096-acd0-e295951c4ca1"
 						}
 					]
 				}
@@ -837,7 +513,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "615d7ee8-df87-47a7-9d9c-ef8457ac4cdc"
+							"value": "eaf6ea8a-1f20-48c8-a283-b786a3fb47c5"
 						}
 					]
 				}

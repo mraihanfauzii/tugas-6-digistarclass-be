@@ -1,42 +1,35 @@
+const axios = require('axios');
 const Item = require('../models/item_model');
 
 exports.create = async (itemData) => {
-    try {
-        const newItem = new Item(itemData);
-        return await newItem.save();
-    } catch (error) {
-        throw new Error('Error creating item');
-    }
+    const newItem = new Item(itemData);
+    return await newItem.save();
 };
 
 exports.getList = async () => {
     try {
-        return await Item.find();
+        // Ambil item dari MongoDB
+        const dbItems = await Item.find();
+
+        // Ambil item dari FakeStoreAPI
+        const apiResponse = await axios.get('https://fakestoreapi.com/products');
+        const apiItems = apiResponse.data;
+
+        // Gabungkan item dari MongoDB dan FakeStoreAPI
+        return [...dbItems, ...apiItems];
     } catch (error) {
         throw new Error('Error retrieving items');
     }
 };
 
 exports.getOneByItemId = async (itemId) => {
-    try {
-        return await Item.findOne({ item_id: itemId });
-    } catch (error) {
-        throw new Error('Error retrieving item');
-    }
+    return await Item.findOne({ item_id: itemId });
 };
 
 exports.updateOne = async (itemId, updateData) => {
-    try {
-        return await Item.findOneAndUpdate({ item_id: itemId }, updateData, { new: true });
-    } catch (error) {
-        throw new Error('Error updating item');
-    }
+    return await Item.findOneAndUpdate({ item_id: itemId }, updateData, { new: true });
 };
 
 exports.deleteOne = async (itemId) => {
-    try {
-        return await Item.findOneAndDelete({ item_id: itemId });
-    } catch (error) {
-        throw new Error('Error deleting item');
-    }
+    return await Item.findOneAndDelete({ item_id: itemId });
 };

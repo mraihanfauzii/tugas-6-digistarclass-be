@@ -4,8 +4,17 @@ const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 
 const register = async (user) => {
+  // Pastikan alamat disertakan saat registrasi
+  if (!user.address || !user.address.street || !user.address.city || !user.address.state || !user.address.zip) {
+    throw new Error('Address is required');
+  }
+  
   user.user_id = uuidv4();
   user.password = await bcrypt.hash(user.password, 10);
+  
+  // Default role could be 'customer' if not provided
+  user.role = user.role || 'customer';
+
   return await userRepository.create(user);
 };
 
@@ -14,8 +23,8 @@ const login = async (email, password) => {
   if (!user || !bcrypt.compareSync(password, user.password)) {
     throw new Error('Invalid email or password');
   }
-  const token = jwt.sign({ userId: user.user_id }, process.env.JWT_SECRET, { expiresIn: '30m' });
-  return token;
+  const token = jwt.sign({ userId: user.user_id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '30m' });
+  return { token, user };
 };
 
 const getList = async () => {

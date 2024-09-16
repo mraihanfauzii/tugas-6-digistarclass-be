@@ -11,8 +11,13 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const token = await userUsecase.login(req.body.email, req.body.password);
-    res.json({ statusCode: res.statusCode, message: 'Login successful', token });
+    const { token, user } = await userUsecase.login(req.body.email, req.body.password);
+    
+    // Menghapus password dari user sebelum dikirim ke response
+    const userWithoutPassword = { ...user._doc };
+    delete userWithoutPassword.password;
+
+    res.json({statusCode: res.statusCode, message: 'Login successful', token, user: userWithoutPassword});
   } catch (error) {
     res.status(401).json({ statusCode: res.statusCode, error: 'Unauthorized', message: error.message });
   }

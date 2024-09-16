@@ -1,14 +1,12 @@
 const orderUsecase = require('../domain/usecases/order_usecase');
+const Order = require('../domain/models/order_model');
 
 const create = async (req, res) => {
     try {
-        const order = await orderUsecase.create({
-            ...req.body,
-            created_by: req.user.userId, // Assuming req.user contains authenticated user info
-        });
+        const order = await orderUsecase.create(req.body, req.user.userId);
         res.status(201).json({ statusCode: res.statusCode, message: 'Order created successfully', order });
     } catch (error) {
-        res.status(500).json({ statusCode: res.statusCode, message: 'Failed to create order', error: error.message });
+        res.status(error.statusCode || 500).json({ statusCode: res.statusCode, message: error.message });
     }
 };
 
@@ -23,7 +21,7 @@ const getList = async (req, res) => {
 
 const getOneByOrderId = async (req, res) => {
     try {
-        const order = await orderUsecase.getOneByOrderId(req.params.id);
+        const order = await orderUsecase.getOneByOrderId(req.params.id, { status: req.body.status });
         res.status(200).json({ statusCode: res.statusCode, message: 'Order retrieved successfully', order });
     } catch (err) {
         res.status(404).json({ statusCode: res.statusCode, message: 'Order not found', error: err.message });
@@ -32,12 +30,18 @@ const getOneByOrderId = async (req, res) => {
 
 const updateOne = async (req, res) => {
     try {
-        const updatedOrder = await orderUsecase.updateOne(req.params.id, req.body);
+        // Mengambil hanya status dari request body
+        const statusUpdate = { status: req.body.status };
+
+        // Melakukan update hanya pada field status
+        const updatedOrder = await Order.findOneAndUpdate({ order_id: req.params.id }, statusUpdate, { new: true });
+
         res.status(200).json({ statusCode: res.statusCode, message: 'Order updated successfully', updatedOrder });
     } catch (err) {
         res.status(500).json({ statusCode: res.statusCode, message: 'Failed to update order', error: err.message });
     }
 };
+
 
 const deleteOne = async (req, res) => {
     try {
