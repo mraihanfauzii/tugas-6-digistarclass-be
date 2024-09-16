@@ -13,7 +13,7 @@ Terdapat 2 role yang digabungkan dalam 1 model yaitu user, di model user terdapa
 
 - **Response Lengkap**: Setiap CRUD yang dilakukan menghasilkan response yang lengkap sebagai contoh ketika User melakukan order maka muncul response barang yang dipesan, harga, quantity, total harga dari harga*quantity, payment method, address pembeli, delivery method, status transaksi, created by(id user yang melakukan pemesanan)
 
-- **Collection Postman**: Terdapat Collection Postman yang dapat import untuk melakukan CRUD User, Item, dan Order/Transaksi dengan contoh Body Request yang telah disediakan
+- **Collection Postman**: Terdapat Collection Postman yang dapat di import untuk melakukan CRUD User, Item, dan Order/Transaksi dengan contoh Body Request yang telah disediakan
 
 ## Pengaturan Lokal
 
@@ -36,12 +36,13 @@ Terdapat 2 role yang digabungkan dalam 1 model yaitu user, di model user terdapa
    ```
 3. **Atur variabel lingkungan: Buat file .env di direktori utama dan tambahkan berikut ini::**
    ```bash
-   DB_URI=mongodb://localhost:27017/namadatabaseanda
+   MONGO_DB_URL=mongodb://localhost:27017/namadatabaseanda
    JWT_SECRET=jwtanda
    ```
 4. **Jalankan aplikasi dengan masuk ke root project:**
    ```bash
    node server.js
    ```
+Aplikasi akan berjalan pada port 7000
 
    
